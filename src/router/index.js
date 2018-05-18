@@ -17,6 +17,7 @@ import OrganizeManage from '../pages/DataCenter/OrganizeManage'
 import AuthorizeService from '../pages/AuthService/AuthorizeService'
 import AccountPage from '../pages/AuthService/AccountPage'
 import AuthorizePage from '../pages/AuthService/AuthorizePage'
+import myNew from '../pages/AuthService/myNew'
 
 import LableService from '../pages/LableService/LableService'
 import FormInfo from '../pages/LableService/FormInfo'
@@ -27,32 +28,33 @@ let a = PoliceStrength;
 //debugger
 const community = [CommunityPlatform,CommunityIndex, Monitor,PoliceStrength];
 const datacenter=[DataCenter,CitySet,OrganizeManage];
-const lableService=[AuthorizeService,AccountPage,AuthorizePage];
+const lableService=[AuthorizeService,AccountPage,AuthorizePage,myNew];
 const formInfo = [LableService,FormInfo];
 
 Authorize.Init([Layout,...community,...datacenter,...lableService,...formInfo]);
 
 const routerName = ["path","components","redirect","name","meta"];
-export default new Router({
-	routes: Authorize.getRoute()
-})
+//export default new Router({
+//	routes: Authorize.getRoute()
+//})
 //export default new Router({
 //	routes: GetRoutePath()
 //})
-//export default new Router({
-//routes: [
-//  {
-//    path: '',
-//    component: Layout,
-//    children:[
-//    {
-//    	path:'',
-//    	name:'Index',
-//    	component:Index////resolve=>require([Index], resolve)
-//    }]
-//  }
-//]
-//})
+export default new Router({
+routes: [
+    {
+      path: '/Layout',
+      component: Layout,
+      children:[
+      ]
+    },
+    {
+      	path:'/AuthorizePage',
+      	name:'AuthorizePage',
+      	component:AuthorizePage////resolve=>require([Index], resolve)
+      }
+]
+})
 Vue.prototype.MenuValid = function(...arg){
 	let a = arg;
 	let b = this._data;
