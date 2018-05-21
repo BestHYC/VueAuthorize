@@ -15,13 +15,14 @@
 </template>
 
 <script>
-	import Authorize,{MenuName} from '../../authorize/moduleEnum'
-	//import Auth_Menu from '../../authorize/Authorize'
-	import Auth from '../../authorize/Authorize'
+	import ModuleName,{MenuName} from '../../authorize/moduleEnum'
+	import '../../router/PageInit'
+	import Module from '../../authorize/AuthorizeModule'
+	import Authorize from '../../authorize/Authorize'
 	export default {
 		data:function(){
 			return{
-				[Authorize]:{
+				[ModuleName]:{
 					name:"authopage",
 					parent:"AccountPage",
 					descriptor:"权限配置",
@@ -35,16 +36,24 @@
 		},
 		computed:{
 			treeNode:function(){
-				let a = [Auth.getMapValues()];
 				debugger
-				return [Auth.getMapValues()];
+				let a = Module.getMapValues();
+				return a;
 			}
 		},
 		methods:{
 			getCheckedNodes() {
 				let _select = this.$refs.tree.getCheckedNodes();
-				Auth.setValues(_select);
+				Authorize.setValues(_select);
 				console.log();
+	      	}
+		},
+		[MenuName]:{
+			'T01':'新增'
+		}
+	}
+//第一代代码,对得到的数据进行拼接,然后存储至数据库
+	
 //				let _memuName=['name','src','parent','descriptor','iconName','meta','components','path','redirect','methodname'];
 //				let _map = new Map();
 //				let _arr =[];
@@ -75,12 +84,6 @@
 //					}).catch(e =>{
 //					});
 //				})
-	      	}
-		},
-		[MenuName]:{
-			'T01':'新增'
-		}
-	}
 </script>
 
 <style>

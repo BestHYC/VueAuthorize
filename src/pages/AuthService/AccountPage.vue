@@ -1,12 +1,15 @@
 <template>
+<div id="account">
+<span>测试数据</span>
+</div>
 </template>
 
 <script>
-	import Authorize from '../../authorize/moduleEnum'
+	import ModuleName from '../../authorize/moduleEnum'
 	export default{
 		data:function(){
 			return{
-				[Authorize]:{
+				[ModuleName]:{
 					name:"AccountPage",
 					parent:"AuthorizeService",
 					descriptor:"账户配置",

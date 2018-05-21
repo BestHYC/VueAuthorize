@@ -2,11 +2,11 @@
 </template>
 
 <script>
-	import Authorize from '../../authorize/moduleEnum'
+	import ModuleName from '../../authorize/moduleEnum'
 	export default{
 		data:function(){
 			return{
-				[Authorize]:{
+				[ModuleName]:{
 					name:"CitySet",
 					parent:"DataCenter",
 					descriptor:"城市配置",

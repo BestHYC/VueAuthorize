@@ -8,7 +8,6 @@ import axios from 'axios'
 import Qs from 'qs'
 import router from './router'
 
-
 Vue.prototype.$Qs = Qs;
 Vue.use(ElementUI);
 Vue.config.productionTip = false
@@ -17,14 +16,17 @@ Vue.prototype.$http = axios;
 //const routers = new Proxy(routers,{});
 
 /* eslint-disable no-new */
-new Promise((resolve)=>{resolve()}).then(()=>{
-	let a = new Vue({
-		  el: '#app',
-		  router,
-		  components: { App },
-		  template: '<App/>'
-		})
-	let b =a._route.matched;
-	let c = Reflect.ownKeys(a._router);
+router.then(resolve =>{
+	new Vue({
+	  el: '#app',
+	  router:resolve,
+	  components: { App },
+	  template: '<App/>'
+	})
 })
+
+//	Promise((resolve)=>{resolve()}).then(
+//	let b =a._route.matched;
+//	let c = Reflect.ownKeys(a._router);
+//})
 

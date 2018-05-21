@@ -5,11 +5,11 @@
 </template>
 
 <script>
-	import Authorize from '../../authorize/moduleEnum'
+	import ModuleName from '../../authorize/moduleEnum'
 	export default{
 		data:function(){
 			return{
-				[Authorize]:{
+				[ModuleName]:{
 					name:"OrganizeManage",
 					parent:"CitySet",
 					descriptor:"组织机构管理",

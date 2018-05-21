@@ -8,11 +8,11 @@
 </template>
 
 <script>
-	import Authorize,{MenuName} from '../../authorize/moduleEnum'
+	import ModuleName,{MenuName} from '../../authorize/moduleEnum'
 	export default{
 		data:function(){
 			return{
-				[Authorize]:{
+				[ModuleName]:{
 					name:"PoliceStrength",
 					parent:"Monitor",
 					descriptor:"实时警力",

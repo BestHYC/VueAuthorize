@@ -7,16 +7,16 @@
 </template>
 
 <script>
-	import Authorize from '../../authorize/moduleEnum'
+	import ModuleName from '../../authorize/moduleEnum'
 	export default{
 		data:function(){
 			return{
-				[Authorize]:{
+				[ModuleName]:{
 					name:"CommunityIndex",
 					parent:"CommunityPlatform",
 					descriptor:"系统首页",
 					iconName:"el-icon-bell",
-					path:""
+					path:"Index"
 				}
 			}
 		}

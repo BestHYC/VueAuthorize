@@ -21,7 +21,7 @@
 	import Footers from '../components/Footer'
 	import Sidebar from '../components/Sidebar'
 	import Breadcrumb from '../components/Breadcrumb'
-	import Authorize from '../authorize/moduleEnum'
+	import ModuleName from '../authorize/moduleEnum'
 	import Auth_Menu from '../authorize/Authorize'
 	export default {
 		components:{
@@ -34,6 +34,7 @@
 		},
 		computed:{
 			Module:function(){
+				debugger
 				return Auth_Menu.getModule().find(n=>{
 					return n["name"]==this.$data[Authorize]["name"];
 				})["children"];
@@ -72,7 +73,7 @@
 		},
 		data:function(){
 			return{
-				[Authorize]:{
+				[ModuleName]:{
 					name:"Layout",
 					parent:"",
 					descriptor:"社区",
