@@ -12,7 +12,6 @@ import OrganizeManage from '../pages/DataCenter/OrganizeManage'
 import AuthorizeService from '../pages/AuthService/AuthorizeService'
 import AccountPage from '../pages/AuthService/AccountPage'
 import AuthorizePage from '../pages/AuthService/AuthorizePage'
-import myNew from '../pages/AuthService/myNew'
 
 import LableService from '../pages/LableService/LableService'
 import FormInfo from '../pages/LableService/FormInfo'
@@ -23,7 +22,7 @@ import AuthorizeModule from '../authorize/AuthorizeModule'
 //对数据进行分组,也可以直接加载进入
 const community = [CommunityPlatform,CommunityIndex, Monitor,PoliceStrength];
 const datacenter=[DataCenter,CitySet,OrganizeManage];
-const lableService=[AuthorizeService,AccountPage,AuthorizePage,myNew];
+const lableService=[AuthorizeService,AccountPage,AuthorizePage];
 const formInfo = [LableService,FormInfo];
 
 AuthorizeModule.Init([Layout,...community,...datacenter,...lableService,...formInfo,Error]);

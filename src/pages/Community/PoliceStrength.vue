@@ -8,7 +8,7 @@
 </template>
 
 <script>
-	import ModuleName,{MenuName} from '../../authorize/moduleEnum'
+	import ModuleName,{MenuName} from '../../authorize/ModuleEnum'
 	export default{
 		data:function(){
 			return{

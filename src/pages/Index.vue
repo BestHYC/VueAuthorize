@@ -65,7 +65,7 @@
 </template>
 
 <script>
-	import Authorize from '../authorize/moduleEnum'	
+	import Authorize from '../authorize/ModuleEnum'	
 	export default{
 		data(){
 			return{

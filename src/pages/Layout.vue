@@ -21,7 +21,7 @@
 	import Footers from '../components/Footer'
 	import Sidebar from '../components/Sidebar'
 	import Breadcrumb from '../components/Breadcrumb'
-	import ModuleName from '../authorize/moduleEnum'
+	import ModuleName from '../authorize/ModuleEnum'
 	import Auth_Menu from '../authorize/Authorize'
 	export default {
 		components:{

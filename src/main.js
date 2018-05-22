@@ -24,7 +24,6 @@ router.then(resolve =>{
 	  template: '<App/>'
 	})
 })
-
 //	Promise((resolve)=>{resolve()}).then(
 //	let b =a._route.matched;
 //	let c = Reflect.ownKeys(a._router);

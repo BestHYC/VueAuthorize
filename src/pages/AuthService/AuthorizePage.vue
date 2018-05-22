@@ -15,7 +15,7 @@
 </template>
 
 <script>
-	import ModuleName,{MenuName} from '../../authorize/moduleEnum'
+	import ModuleName,{MenuName} from '../../authorize/ModuleEnum'
 	import '../../router/PageInit'
 	import Module from '../../authorize/AuthorizeModule'
 	import Authorize from '../../authorize/Authorize'

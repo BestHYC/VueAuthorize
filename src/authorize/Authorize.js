@@ -82,7 +82,7 @@ class AuthorizeRoute{
 		})
 	}
 	_require(src){
-		return resolve=> require([src], resolve);
+		return ()=>import(""+src.toString());
 	}
 }
 

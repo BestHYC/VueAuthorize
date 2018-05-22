@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	import ModuleName from '../../authorize/moduleEnum'
+	import ModuleName from '../../authorize/ModuleEnum'
 	export default{
 		data:function(){
 			return{
