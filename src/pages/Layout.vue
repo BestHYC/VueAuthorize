@@ -2,7 +2,7 @@
 	<div id="layout">
 		<Headers :items="Module"  @updateHead="updateHead"/>
 		<div class="page-container">
-			<Sidebar :items="MenuList" @updateroute="updateRoute" />
+			<Sidebar :items="Module" :currentIndex="current" @updateroute="updateRoute" />
 			<div class="page-content-wrapper">
 				<div class="page-content">
 					<Breadcrumb :items="BreadList" @clickEvent="updateRoute" @closeEvent="deleteBread"/>
@@ -22,7 +22,7 @@
 	import Sidebar from '../components/Sidebar'
 	import Breadcrumb from '../components/Breadcrumb'
 	import ModuleName from '../authorize/ModuleEnum'
-	import Auth_Menu from '../authorize/Authorize'
+	import Authorize from '../authorize/Authorize'
 	export default {
 		components:{
 			Headers,
@@ -34,9 +34,8 @@
 		},
 		computed:{
 			Module:function(){
-				debugger
-				return Auth_Menu.getModule().find(n=>{
-					return n["name"]==this.$data[Authorize]["name"];
+				return Authorize.getModule().find(n=>{
+					return n["name"]==this.$data[ModuleName]["name"];
 				})["children"];
 			},
 			MenuList:function(){
@@ -54,8 +53,8 @@
 				}
 				this.routePage(obj);
 			},
-			updateHead:function(obj){
-				this.currentHead = obj["name"];
+			updateHead:function(index){
+				this.current = index;
 			},
 			deleteBread:function(obj){
 				let _list = this.BreadList
@@ -77,9 +76,9 @@
 					name:"Layout",
 					parent:"",
 					descriptor:"社区",
-					path:"/"
+					path:"/Layout"
 				},
-				currentHead:"CommunityPlatform",
+				current:0,
 				BreadList:[{descriptor:"系统首页",name:"CommunityIndex"}]
 			}
 		}

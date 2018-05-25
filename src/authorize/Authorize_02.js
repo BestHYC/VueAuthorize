@@ -1,4 +1,4 @@
-import Authorize,{MenuName} from './moduleEnum'
+import Authorize,{MenuName} from './ModuleEnum'
 
 const Auth_Key = Symbol.for("权限单例");
 

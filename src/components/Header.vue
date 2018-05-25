@@ -7,7 +7,7 @@
 		</div>
 		<ul id="navMenu" class="nav">
 			<li class="tdr-xmtab" v-for="(item,index) in items">
-				<a :class="{'active':current==index}" @click="currentHead(item,index)">{{item.descriptor}}</a>
+				<a :class="{'active':current==index}" @click="currentHead(index)">{{item.descriptor}}</a>
 			</li>
 		</ul>
 	</div>
@@ -22,8 +22,8 @@
 			}
 		},
 		methods:{
-			currentHead:function(item,index){
-				this.$emit('updateHead',item);
+			currentHead:function(index){
+				this.$emit('updateHead',index);
 				this.current = index;
 			}
 		}

@@ -18,7 +18,6 @@ import FormInfo from '../pages/LableService/FormInfo'
 import Error from '../pages/Page404'
 
 import AuthorizeModule from '../authorize/AuthorizeModule'
-
 //对数据进行分组,也可以直接加载进入
 const community = [CommunityPlatform,CommunityIndex, Monitor,PoliceStrength];
 const datacenter=[DataCenter,CitySet,OrganizeManage];

@@ -1,9 +1,10 @@
-import ModuleName,{MenuName} from './moduleEnum'
+import ModuleName,{MenuName} from './ModuleEnum'
+import {ModuleMap} from './DataStructure'
 import axios from 'axios'
 const Auth_Key = Symbol.for("权限单例");
 
 const routerName = ["path","components",,"redirect","name","meta"];
-const jsonName = ['components','meta','redirect'];
+const jsonName = ['components','meta','redirect'];//针对对象进行序列化,然后存放至数据库中
 
 /*
  * 
@@ -13,6 +14,8 @@ class AuthorizeRoute{
 	promise=''
 	authData=[];
 	routeArr=[];
+	moduleMap = new ModuleMap();
+	menuMap = new ModuleMap();
 	constructor(){
 		this.promise = axios.get('http://localhost:5500/authorize')
 	}
@@ -23,13 +26,16 @@ class AuthorizeRoute{
 			fun(this.routeArr);
 		}).catch(e =>{console.log(e)});
 	}
-	getRoute(){
-		return this.routeArr;
+	getMenuMap(){
+		return this.menuMap;
+	}
+	getModule(){
+		return [...this.moduleMap.values()];
+		//return this.routeArr;
 	}
 	//这段代码写的不错,我喜欢
 	_setRoute(){
-		let _data = this.authData;
-		_data.forEach(item =>{
+		this.authData.forEach(item =>{
 			let _obj ={};
 			this._getRouteObj(item, _obj, (item,val) =>{
 				if(item=="path"&&!val.startsWith('/'))return '/'+val;
@@ -69,7 +75,12 @@ class AuthorizeRoute{
 	}
 	_setData(data){
 		data.forEach(item =>{
-			if(item['methodname'])return;
+			this.moduleMap.set(item['name'],item);
+			if(item['methodname']){
+				let _arr = item['methodname'].split(',')
+				this.menuMap.set(item['name'],_arr)
+				return;
+			}//如果有methodname的对象则只可能是菜单,就没有子菜单了,并且也有
 			let obj = data.filter(current =>{
 				return current['parent'] == item['name'];
 			});
@@ -82,11 +93,11 @@ class AuthorizeRoute{
 		})
 	}
 	_require(src){
-		return ()=>import(""+src.toString());
+		return resolve=>require([`../${src}`], resolve);
 	}
 }
 
-const Tdr_Authorize = Symbol.for("权限模块单例0");
+const Tdr_Authorize = Symbol.for("权限模块单例");
 
 if(!global[Tdr_Authorize]){
 	global[Tdr_Authorize] = new AuthorizeRoute();

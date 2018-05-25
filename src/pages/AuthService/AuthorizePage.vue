@@ -16,7 +16,6 @@
 
 <script>
 	import ModuleName,{MenuName} from '../../authorize/ModuleEnum'
-	import '../../router/PageInit'
 	import Module from '../../authorize/AuthorizeModule'
 	import Authorize from '../../authorize/Authorize'
 	export default {
@@ -31,20 +30,25 @@
 				defaultProps: {
 		          children: 'children',
 		          label: 'descriptor'
-		        }
+		      }
 			}
+		},
+		beforeCreate(){
+			import('../../router/PageInit').then(()=>{
+				if(!Authorize.getMenuMap().size())this.$router.push('/')
+			})
 		},
 		computed:{
 			treeNode:function(){
-				debugger
 				let a = Module.getMapValues();
+				console.log(a);
 				return a;
 			}
 		},
 		methods:{
 			getCheckedNodes() {
 				let _select = this.$refs.tree.getCheckedNodes();
-				Authorize.setValues(_select);
+				Module.setValues(_select);
 				console.log();
 	      	}
 		},

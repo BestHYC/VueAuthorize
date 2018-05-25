@@ -1,6 +1,6 @@
 <template>
 <div id="error">
-	<span>错误页面</span>
+	<span style="color: black;">错误页面</span>
 </div>
 </template>
 
@@ -12,7 +12,8 @@
 				[Authorize]:{
 					name:"Page404",
 					parent:"",
-					descriptor:"错误页"
+					descriptor:"错误页",
+					path:"/"
 				}
 			}
 		}
@@ -20,4 +21,7 @@
 </script>
 
 <style>
+	body{
+		background-color: #0DB1F5;
+	}
 </style>

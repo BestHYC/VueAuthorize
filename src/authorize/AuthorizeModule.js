@@ -1,4 +1,5 @@
-import ModuleName,{MenuName} from './moduleEnum'
+import ModuleName,{MenuName} from './ModuleEnum'
+import {ModuleMap} from './DataStructure'
 import axios from 'axios'
 
 const memuName=['name','src','parent','descriptor','iconName','meta','components','path','redirect','methodname'];
@@ -59,9 +60,11 @@ class AuthorizeModule
  	}
  	//获取每个对象上的值信息,并保存在Map中
  	_setModule(arg){
+ 		console.log(arg)
  		arg.forEach(item =>{
+ 			if(!item)return
 	 		let obj = item.data()[ModuleName];
-	 		obj['src'] = item['__file'].replace(/^src/ig,"..").replace(/\\/ig,'/');
+	 		obj['src'] = item['__file'].replace(/^src\\/ig,"").replace(/\\/ig,'/');
 			if(item[MenuName]){
 				let _arr=[],_obj = item[MenuName];
 				for(let i in _obj){
@@ -75,24 +78,6 @@ class AuthorizeModule
  		this.moduleMap._updateValues();
  	}
  }
-class ModuleMap extends Map
-{
-	constructor(){
-		super();
-	}
- 	_updateValues(){
- 		let menu = [...this.values()];
-		menu.forEach(item=>{
-			let _arr = menu.filter(currentValue =>{
-				if(currentValue["parent"] == item["name"]){
-					return currentValue
-				}
-			});
-			if(_arr.length != 0){
-				item["children"]=_arr;
-			}
-		});
- 	}
-}
+
 const Tdr_Module = new AuthorizeModule;
 export default Tdr_Module
