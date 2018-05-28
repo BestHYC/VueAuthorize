@@ -32,6 +32,27 @@
 		},
 		mounted(){
 		},
+		beforeRouteEnter(to, from ,next){
+			console.log(to);
+			next(vm =>{
+				if(!vm.BreadList.find(n=>{
+					return n.name == to["name"];
+				})){
+					vm.BreadList.push(Authorize.getModuleObj(to["name"]))
+				}
+				
+			});
+		},
+		watch:{
+			'$route'(to, from){
+				console.log('$route');
+				if(!this.BreadList.find(n=>{
+					return n.name == to["name"];
+				})){
+					this.BreadList.push(Authorize.getModuleObj(to["name"]));
+				}
+			}
+		},
 		computed:{
 			Module:function(){
 				return Authorize.getModule().find(n=>{
@@ -46,11 +67,6 @@
 		},
 		methods:{
 			updateRoute:function(obj){
-				if(!this.BreadList.find(n=>{
-					return n.name == obj["name"];
-				})){
-					this.BreadList.push(obj);
-				}
 				this.routePage(obj);
 			},
 			updateHead:function(index){
@@ -58,13 +74,11 @@
 			},
 			deleteBread:function(obj){
 				let _list = this.BreadList
-				if(_list.length >1){
-					let _index = _list.findIndex(n=>{
-						return n["name"] ==obj["name"];
-					})
-					_list.splice(_index,1);
-					this.routePage(_list[_list.length -1]);
-				}
+				let _index = _list.findIndex(n=>{
+					return n["name"] ==obj["name"];
+				})
+				_list.splice(_index,1);
+				this.routePage(_list[_list.length -1]);
 			},
 			routePage(obj){
 				this.$router.push({name:obj["name"]});
@@ -76,7 +90,8 @@
 					name:"Layout",
 					parent:"",
 					descriptor:"社区",
-					path:"/Layout"
+					path:"/",
+					redirect:{name:"CommunityIndex"}
 				},
 				current:0,
 				BreadList:[{descriptor:"系统首页",name:"CommunityIndex"}]
@@ -150,7 +165,7 @@
 		font-weight: 300;
 		color: #B4BCC8;
 	}
-	.page-sidebar .page-sidebar-menu>li:hover>a{
+	.page-sidebar .page-sidebar-menu>li:hover>a,ul.page-sidebar-menu>li.active>a{
 		background-color: #0db1f5;
 		color: #FFFFFF;
 	}
@@ -185,7 +200,7 @@
 		list-style-type: none;
 	}
 	.page-breadcrumb li.active{
-		border-bottom:3px solid #0DB1F5;
+		border-bottom:3px solid 0;
 	}
 	.page-bar .page-breadcrumb>li>a{
 		color: #888;

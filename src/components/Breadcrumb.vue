@@ -33,6 +33,7 @@
 				this.current = index;
 			},
 			closeBtn:function(item){
+				if(this.items.length == 1)return;
 				this.$emit("closeEvent",item)
 				this.current='';
 			}

@@ -29,9 +29,20 @@ class AuthorizeRoute{
 	getMenuMap(){
 		return this.menuMap;
 	}
+	getSelectMenu(){
+		let _arr = [];
+		for(let key of this.menuMap.keys()){
+			this.menuMap.get(key).forEach(item =>{
+				_arr.push(`${key}$${item}`)
+			})
+		}
+		return _arr;
+	}
+	getModuleObj(name){
+		return this.moduleMap.get(name);
+	}
 	getModule(){
 		return [...this.moduleMap.values()];
-		//return this.routeArr;
 	}
 	//这段代码写的不错,我喜欢
 	_setRoute(){

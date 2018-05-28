@@ -5,14 +5,16 @@
 				<div class="tdr-leftIcon">
 					<div class="sidebar-toggle el-icon-tickets"></div>
 				</div>
-				<ul class="page-sidebar-menu"  v-for="(item,index) in items" :key="item.name" v-show="currentIndex == index">
+				<ul class="page-sidebar-menu"  v-for="(item,index) in items" 
+					:key="item.name" v-show="currentIndex == index">
 					<li class="nav-item" v-for="(item1, index1) in item['children']" :key="item1.name">
-						<a href="#" class="nav-link nav-toggle" @click="toggleUl(index)">
+						<a href="#" class="nav-link nav-toggle" @click="toggleUl(index1)">
 							<i :class="[item1['iconName']]"></i>
 							<span>{{item1.descriptor}}</span>
 							<span v-if="item1['children']" class="el-icon-more-outline iconleft"></span>
 						</a>
-						<ul class="sub-menu" v-if="item1['children']" :class="{'showToggle':index!=current}">
+						<ul class="sub-menu" v-if="item1['children']" 
+							:class="{'showToggle':index1!=current}">
 							<li class="nav-item active" v-for="i in item1['children']" :key="i.name">
 								<a @click.prevent="toRoute(i)">
 									<i :class="[i['iconName']]"></i>
@@ -40,17 +42,8 @@
 			}
 		},
 		mounted(){
-			console.log(this.items)
 		},
 		computed:{
-			menulist:function(){
-				let a = this.items.filter(currentValue =>{return currentValue.parent==="";});
-				if(a.length>0){
-					return a[0]["children"];
-				}else{
-					return a;
-				}
-			}
 		},
 		methods:{
 			toRoute:function(name){
@@ -58,11 +51,14 @@
 			},
 			toggleUl:function(index){
 				this.current == index?(this.current=NaN):(this.current=index);
+			},
+			clickLi:function(item, index){
+				
 			}
 		},
 		data:function(){
 			return {
-				current:''
+				current:[]
 			}
 		}
 	}

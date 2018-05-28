@@ -13,7 +13,7 @@
 					name:"Page404",
 					parent:"",
 					descriptor:"错误页",
-					path:"/"
+					path:"/Page404"
 				}
 			}
 		}

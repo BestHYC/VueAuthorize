@@ -2,6 +2,7 @@
 	<div id="authopage">
 		<el-tree
 		  :data="treeNode"
+		  :default-checked-keys="selectNodes"
 		  show-checkbox
 		  node-key="name"
 		  ref="tree"
@@ -27,6 +28,8 @@
 					descriptor:"权限配置",
 					iconName:"el-icon-edit"
 				},
+				treeNode:[],
+				selectNodes:[],
 				defaultProps: {
 		          children: 'children',
 		          label: 'descriptor'
@@ -35,21 +38,16 @@
 		},
 		beforeCreate(){
 			import('../../router/PageInit').then(()=>{
-				if(!Authorize.getMenuMap().size())this.$router.push('/')
+				this.$nextTick(function(){
+			      this.treeNode = Module.getMapValues();
+			      this.selectNodes = Authorize.getSelectMenu();
+			    })
 			})
-		},
-		computed:{
-			treeNode:function(){
-				let a = Module.getMapValues();
-				console.log(a);
-				return a;
-			}
 		},
 		methods:{
 			getCheckedNodes() {
 				let _select = this.$refs.tree.getCheckedNodes();
 				Module.setValues(_select);
-				console.log();
 	      	}
 		},
 		[MenuName]:{
