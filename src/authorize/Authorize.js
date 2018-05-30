@@ -25,7 +25,10 @@ class AuthorizeRoute{
 			this._setData(jsonData);
 			this._setRoute();
 			fun(this.routeArr);
-		}).catch(e =>{console.log(e)});
+		}).catch(e =>{
+			fun([])
+			console.log(e)
+			});
 	}
 	getMenuMap(){
 		return this.menuMap;
