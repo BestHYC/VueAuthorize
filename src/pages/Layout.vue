@@ -200,7 +200,7 @@
 		list-style-type: none;
 	}
 	.page-breadcrumb li.active{
-		border-bottom:3px solid 0;
+		border-bottom:3px solid #0db1f5;
 	}
 	.page-bar .page-breadcrumb>li>a{
 		color: #888;

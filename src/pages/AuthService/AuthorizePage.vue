@@ -48,6 +48,7 @@
 			getCheckedNodes() {
 				let _select = this.$refs.tree.getCheckedNodes();
 				Module.setValues(_select);
+				
 	      	}
 		},
 		[MenuName]:{

@@ -1,10 +1,9 @@
-import ModuleName,{MenuName} from './ModuleEnum'
+import ModuleName,{MenuName,jsonName} from './ModuleEnum'
 import {ModuleMap} from './DataStructure'
 import axios from 'axios'
+import API from '../path'
 const Auth_Key = Symbol.for("权限单例");
-
 const routerName = ["path","components",,"redirect","name","meta"];
-const jsonName = ['components','meta','redirect'];//针对对象进行序列化,然后存放至数据库中
 
 /*
  * 
@@ -16,12 +15,14 @@ class AuthorizeRoute{
 	routeArr=[];
 	moduleMap = new ModuleMap();
 	menuMap = new ModuleMap();
-	constructor(){
-		this.promise = axios.get('http://localhost:5500/authorize')
+	constructor(id=1){
+		this.promise = axios.get(`${API.get}/${id}`)
 	}
 	Init(fun){
 		this.promise.then(resolve =>{
-			this._setData(resolve.data);
+			let {data:{Data,Status}} = resolve;
+			let jsonData = JSON.parse(Data);
+			this._setData(jsonData);
 			this._setRoute();
 			fun(this.routeArr);
 		}).catch(e =>{console.log(e)});
@@ -31,10 +32,17 @@ class AuthorizeRoute{
 	}
 	getSelectMenu(){
 		let _arr = [];
+		console.log(this.menuMap)
 		for(let key of this.menuMap.keys()){
-			this.menuMap.get(key).forEach(item =>{
-				_arr.push(`${key}$${item}`)
-			})
+			let _data = this.menuMap.get(key);
+			
+			if(typeof(_data) === "string"){
+				_arr.push(_data)
+			}else{
+				_data.forEach(item =>{
+					_arr.push(`${key}$${item}`)
+				})
+			}
 		}
 		return _arr;
 	}
@@ -63,7 +71,7 @@ class AuthorizeRoute{
 			 		if(!val)val = obj['name'];//所有的path为空,都默认为其name的值
 			 		if(val=="Index"||val=="index")val='';//此处约定path='index',是默认加载第一个页面即path=''的页面
 			 	}
-			 	if(jsonName.indexOf(item)>-1) val = JSON.parse(val);
+			 	if(jsonName.indexOf(item)>-1 && val) val = JSON.parse(JSON.stringify(val));
 			 	if(fun)val=fun(item,val);//添加函数扩展,此处是对path的值进行添加/
 			 	route[item] = val;
 			 }
@@ -97,6 +105,8 @@ class AuthorizeRoute{
 			});
 			if(obj.length){
 				item['children'] = obj;
+			}else{
+				this.menuMap.set(item['name'],item['name'])
 			}
 		});
 		this.authData = data.filter(current =>{

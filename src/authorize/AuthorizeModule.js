@@ -1,6 +1,8 @@
-import ModuleName,{MenuName} from './ModuleEnum'
+import ModuleName,{MenuName,jsonName} from './ModuleEnum'
 import {ModuleMap} from './DataStructure'
 import axios from 'axios'
+import QS from "qs"
+import API from '../path'
 
 const memuName=['name','src','parent','descriptor','iconName','meta','components','path','redirect','methodname'];
 
@@ -16,11 +18,12 @@ class AuthorizeModule
 		this._setModule(arg);
  	}
  	setValues(obj){
- 		let _set = new Set();
- 		let _map = new Map();
- 		//得到值的所有的父对象
+ 		let _set = new Set();//保存同一个对象,如果对象相同,则只保存一份
+ 		let _map = new Map();//如果是一个页面下的按钮,那么拼接成字符串保存至数据库中
+ 		let _module=[];
+ 		//得到按钮的所有的父对象
  		let _parent = item =>{
- 			if(item['isBtn']){
+ 			if(item['isBtn']){//这个为true则表明是按钮,那么就拼接成字符串,保存到菜单module的methodname中
  				let _m = _map.get(item['parent']);
  				let _split = item['name'].split('$');
  				let _itemName = _split[_split.length -1];
@@ -48,9 +51,14 @@ class AuthorizeModule
  					_obj[_item] = item[_item]?item[_item]:'';
  				}
  			})
- 			axios.post('http://localhost:5500/authorize/',_obj).then(resolve=>{console.log(resolve)}).catch(e =>{
- 				console.log(e);
- 			})
+ 			_module.push(_obj);
+ 		})
+ 		let obj_1={Id:1, str:JSON.stringify(_module)};
+ 		axios.post(API.post, QS.stringify(obj_1))
+ 		.then(response =>{
+ 			console.log(response);
+ 		}).catch(e=>{
+ 			console.log(e);
  		})
  	}
  	getMapValues(){
@@ -60,7 +68,6 @@ class AuthorizeModule
  	}
  	//获取每个对象上的值信息,并保存在Map中
  	_setModule(arg){
- 		console.log(arg)
  		arg.forEach(item =>{
  			if(!item)return
 	 		let obj = item.data()[ModuleName];

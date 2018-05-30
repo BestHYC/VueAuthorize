@@ -7,18 +7,18 @@
 				</div>
 				<ul class="page-sidebar-menu"  v-for="(item,index) in items" 
 					:key="item.name" v-show="currentIndex == index">
-					<li class="nav-item" v-for="(item1, index1) in item['children']" :key="item1.name" >
-						<a href="#" class="nav-link nav-toggle" @click="clickLi(item1,index,index1)"
-							v-bind:class="{active:current[currentIndex][0]===index1}">
+					<li class="nav-item" v-for="(item1, index1) in item['children']" :key="item1.name"
+						v-bind:class="{active:current[currentIndex][0]===index1}">
+						<a href="#" class="nav-link nav-toggle" @click="clickLi(item1,index,index1)">
 							<i :class="[item1['iconName']]"></i>
 							<span>{{item1.descriptor}}</span>
 							<span v-if="item1['children']" class="el-icon-more-outline iconleft"></span>
 						</a>
 						<ul class="sub-menu" v-if="item1['children']" 
-							:class="{'showToggle':index1!=current}">
-							<li class="nav-item" v-for="(i,index2) in item1['children']" :key="i.name" >
-								<a @click.prevent="clickLi(i)" 
-									:class="{active:current[currentIndex][1]===index2}">
+							:class="{'showToggle':current[currentIndex][0]!==index1}">
+							<li class="nav-item" v-for="(i,index2) in item1['children']" :key="i.name" 
+								:class="{active:current[currentIndex][1]===index2}">
+								<a @click.prevent="clickLi(i,index, index1, index2)" >
 									<i :class="[i['iconName']]"></i>
 									<span>{{i.descriptor}}</span>
 								</a>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+	import Vue from 'vue'
 	export default {
 		props:{
 			"items":{
@@ -58,12 +59,14 @@
 				this.current == index?(this.current=NaN):(this.current=index);
 			},
 			clickLi:function(item, index,index1, index2){
-				this.current[index][0]=index1				
-				if(!item["children"]){
-					this.current[index][1]=index2;
+				if(index2===undefined){
+					if(index1 === this.current[index][0])index1 = undefined;
+					Vue.set(this.current, index, [index1, this.current[index][1]]);
+				}
+				else{
+					Vue.set(this.current, index, [this.current[index][0],index2]);
 					this.toRoute(item)
 				}
-				
 			}
 		},
 		data:function(){
