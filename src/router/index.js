@@ -5,12 +5,6 @@ import ModuleName from '../authorize/ModuleEnum'
 Vue.use(Router)
 export default new Promise(resolve =>{
 	Authorize.Init(data =>{
-		if(data.length==0){
-			data = [{
-				path:"/",
-				component:resolve =>{require(['../pages/AuthService/AuthorizePage'],resolve)}
-			}]
-		}
 		resolve(new Router({
 			routes: data
 		}))

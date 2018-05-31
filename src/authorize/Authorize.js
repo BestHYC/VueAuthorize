@@ -26,7 +26,10 @@ class AuthorizeRoute{
 			this._setRoute();
 			fun(this.routeArr);
 		}).catch(e =>{
-			fun([])
+			fun([{
+				path:"/",
+				component:resolve =>{require(['../pages/AuthService/AuthorizePage'],resolve)}
+			}])
 			console.log(e)
 			});
 	}
